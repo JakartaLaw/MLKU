@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-
+# %%
 
 class LoadData:
 
@@ -43,7 +43,9 @@ class LoadData:
 
         feature_names = ["f{}".format(i) for i in range(len(training_features.T))] #names for X_variable
         df_train = pd.DataFrame(data=training_features, columns=feature_names)
-        df_train['labels'] = training_labels
+        df_train['labs'] = training_labels
+
+        df_train.to_csv('MNIST_df_train.csv', index=False) # saving database to csv
 
         #For test set
         test_features = np.genfromtxt("MNIST-cropped-txt//MNIST-Test-cropped.txt")
@@ -56,9 +58,10 @@ class LoadData:
 
         feature_names = ["f{}".format(i) for i in range(len(test_features.T))] #names for X_variable
         df_test = pd.DataFrame(data=test_features, columns=feature_names)
-        df_test['labels'] = test_labels
+        df_test['labs'] = test_labels
 
-        return df_train, df_test
+        df_test.to_csv('MNIST_df_test.csv', index=False) # saving database to csv
+        #return df_train, df_test
 
 def ShowImage(df_digits,row):
 
@@ -69,6 +72,7 @@ def ShowImage(df_digits,row):
     df_digits : (pd.DataFrame) dataframe with digits (MNIST)
     row : (int) which row to show iamge from
     """
-    df_temp=df_digits.drop(labels="labels",axis=1)
+    df_temp=df_digits.drop(labels="labs",axis=1)
     plt.imshow(np.array(df_temp.iloc[row:row+1]).reshape(28,28).T, cmap="Greys")
     plt.show()
+# %%
