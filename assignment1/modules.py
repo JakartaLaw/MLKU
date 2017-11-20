@@ -107,5 +107,13 @@ def kNearestClassifier(x,y,value_to_predict,k=1):
     sorter = np.argsort(dist)
 
     sorted_y = y[sorter] # labels sorted according to distance
-    counts = np.bincount(sorted_y[:k-1])
+    counts = np.bincount(sorted_y[:k])
     return np.argmax(counts)
+
+def evaluation_kNearest(df):
+    labs = np.array(df['labs'])
+    preds = np.array(df['prediction'])
+
+    diff = abs(labs-preds)
+
+    return sum(diff)/len(diff)
