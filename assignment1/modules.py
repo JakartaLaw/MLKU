@@ -76,3 +76,36 @@ def ShowImage(df_digits,row):
     plt.imshow(np.array(df_temp.iloc[row:row+1]).reshape(28,28).T, cmap="Greys")
     plt.show()
 # %%
+
+def label_split(df):
+    """ Splits MNIST into X and Y
+
+    Parameters
+    ==========
+    pandas dataframe
+
+    Returns
+    =======
+    x, y : numpy array where x = features, y = labels"""
+
+    x = np.array(df.drop('labs',axis=1))
+    y = np.array(df['labs'])
+    return x, y
+
+def kNearestClassifier(x,y,value_to_predict,k=1):
+
+    ones = np.ones(x.shape[0])
+    data = np.array(x)
+
+    subtractor = np.outer(ones,value_to_predict)
+
+    matrix = data - subtractor
+
+    dist_before_sq = np.diag(np.inner(matrix,matrix)) # distance before squareing
+    dist = np.sqrt(dist_before_sq) # all distances
+
+    sorter = np.argsort(dist)
+
+    sorted_y = y[sorter] # labels sorted according to distance
+    counts = np.bincount(sorted_y[:k-1])
+    return np.argmax(counts)
