@@ -157,3 +157,30 @@ def ValidationSplit(df_input, frac_of_training_obs):
     df_validation = df_input.iloc[train_up_bound:]
 
     return df_train, df_validation
+
+def DevelopData(df_input, num_rows):
+
+    """ For developing purposes
+    """
+
+    return df_input.iloc[0:num_rows]
+
+def OptimalK(k_list, k_pred_list):
+
+    """ Finding Optimal K
+
+    Parameters
+    ==========
+    k_list = list of k
+    k_pred_list = list of prediction errer from kNearestClassifier
+
+    Returns
+    =======
+    K (int) with best performance
+
+    """
+
+    temp_list = np.array(k_pred_list) - np.array([0.0000001*i for i in range(len(k_list))]) # punish complixity
+    opt_k = k_list[np.argmin(temp_list)]
+    error_of_opt_k = k_pred_list[np.argmin(temp_list)]
+    return opt_k, error_of_opt_k
