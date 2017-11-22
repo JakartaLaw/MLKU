@@ -179,4 +179,8 @@ def OptimalK(k_list, k_pred_list):
     K (int) with best performance
 
     """
-    return k_list[np.argmin(k_pred_list)]
+
+    temp_list = np.array(k_pred_list) - np.array([0.0000001*i for i in range(len(k_list))]) # punish complixity
+    opt_k = k_list[np.argmin(temp_list)]
+    error_of_opt_k = k_pred_list[np.argmin(temp_list)]
+    return opt_k, error_of_opt_k
