@@ -157,3 +157,10 @@ def ValidationSplit(df_input, frac_of_training_obs):
     df_validation = df_input.iloc[train_up_bound:]
 
     return df_train, df_validation
+
+def DevelopData(df_input, num_rows):
+
+    """ For developing purposes
+    """
+
+    return df_input.iloc[0:num_rows]
