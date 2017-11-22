@@ -77,6 +77,22 @@ def ShowImage(df_digits,row):
     plt.show()
 # %%
 
+def BinaryRespons(df_input, val_a, val_b):
+    """ Removes all rows where repons variable is not val_a or val_b
+
+    Parameters
+    ==========
+    df_input : (pd.DataFrame)
+    val_a, val_b : (integers) allowed values of respons variables
+
+    Returns
+    =======
+    df : (pd.DataFrame) dataframe where repons variable is only val_a or val_b
+
+    """
+    df = df_input.loc[(df_input['labs']==val_a)|(df_input['labs']==val_b)]
+    return df
+
 def label_split(df):
     """ Splits MNIST into X and Y
 
@@ -93,6 +109,8 @@ def label_split(df):
     return x, y
 
 def kNearestClassifier(x,y,value_to_predict,k=1):
+    """ Classifies
+    """
 
     ones = np.ones(x.shape[0])
     data = np.array(x)
@@ -117,3 +135,25 @@ def evaluation_kNearest(df):
     diff = abs(labs-preds)
 
     return sum(diff)/len(diff)
+
+def ValidationSplit(df_input, frac_of_training_obs):
+
+    """ Splits dataset into training and  validation dataset
+
+    Parameters
+    ==========
+    df_input : (pd.DataFrame) raw training dataset
+    frac_of_training_obs : (float) a float in the interval 0 to 1
+
+    Returns
+    =======
+    df_training, df_validation
+    """
+
+    s = df_input.shape[0] # number of cases
+    train_up_bound = int(s*frac_of_training_obs)
+
+    df_train = df_input.iloc[:train_up_bound]
+    df_validation = df_input.iloc[train_up_bound:]
+
+    return df_train, df_validation
