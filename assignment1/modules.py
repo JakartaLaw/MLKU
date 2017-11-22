@@ -134,7 +134,14 @@ def evaluation_kNearest(df):
 
     diff = abs(labs-preds)
 
-    return sum(diff)/len(diff)
+    def dummy_generator(x):
+        if x==0:
+            return 0
+        else:
+            return 1
+
+    dummy = [dummy_generator(x) for x in diff]
+    return sum(dummy)/len(diff)
 
 def ValidationSplit(df_input, frac_of_training_obs):
 
