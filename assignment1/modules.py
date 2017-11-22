@@ -164,3 +164,19 @@ def DevelopData(df_input, num_rows):
     """
 
     return df_input.iloc[0:num_rows]
+
+def OptimalK(k_list, k_pred_list):
+
+    """ Finding Optimal K
+
+    Parameters
+    ==========
+    k_list = list of k
+    k_pred_list = list of prediction errer from kNearestClassifier
+
+    Returns
+    =======
+    K (int) with best performance
+
+    """
+    return k_list[np.argmin(k_pred_list)]
