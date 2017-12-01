@@ -36,6 +36,34 @@ def markovsbound(alpha, mu=0.5, n=20):
         return np.nan
     return mu/alpha
 
+def p_binomial(alpha, mu=0.5, n=20):
+
+    k = int(alpha * n)
+    binomial_koef = np.math.factorial(n) / (np.math.factorial(k) * np.math.factorial(n - k))
+
+    return binomial_koef * (mu**(k)) * ((1 - mu)**(n-k))
+
+def cum_binomial(alpha, mu=0.5, n=20):
+
+    iterator = 1/n
+
+    alpha_vals = [iterator*i for i in range(int(alpha*n + 1))]
+    return np.sum([p_binomial(j) for j in alpha_vals])
+
 # %%
+Exercise2
+
+def alt_p_binomial(k, mu, n):
+
+    binomial_koef = np.math.factorial(n) / (np.math.factorial(k) * np.math.factorial(n - k))
+    return binomial_koef * (mu**(k)) * ((1 - mu)**(n-k))
+
+def alt_cum_binomial(k, mu, n):
+
+    return np.sum([alt_p_binomial(i, mu=mu, n=n) for i in range(k)])
+
 
 # Exercise 2
+
+
+alt_cum_binomial(20, 0.5, 20)
